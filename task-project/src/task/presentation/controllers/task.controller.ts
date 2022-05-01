@@ -1,9 +1,9 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res } from '@nestjs/common'
 import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiResponseProperty, ApiTags } from '@nestjs/swagger'
 import { Response } from 'express'
-import { createTask, updateTask } from '../.dto'
-import { TaskEntity } from '../entity/task.entity'
-import { TaskService } from '../service/task.service'
+import { createTask, updateTask } from '../../domain/usecases/.dto'
+import { TaskEntity } from '../../domain/entity/task.entity'
+import { TaskService } from '../../data/service/task.service'
 
 @Controller('task')
 export class TaskController {

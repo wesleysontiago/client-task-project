@@ -8,11 +8,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
-const task_controller_1 = require("./task/controllers/task.controller");
-const task_service_1 = require("./task/service/task.service");
+const task_controller_1 = require("./task/presentation/controllers/task.controller");
+const task_service_1 = require("./task/data/service/task.service");
 const task_module_1 = require("./task/task.module");
 const typeorm_1 = require("@nestjs/typeorm");
-const task_entity_1 = require("./task/entity/task.entity");
+const task_entity_1 = require("./task/domain/entity/task.entity");
+const external_api_module_1 = require("./external-api/external-api.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -26,6 +27,7 @@ AppModule = __decorate([
                 entities: [__dirname + "/**/*.entity{.ts,.js}"],
                 synchronize: true
             }),
+            external_api_module_1.ExternalApiModule,
         ],
         controllers: [task_controller_1.TaskController],
         providers: [task_service_1.TaskService],

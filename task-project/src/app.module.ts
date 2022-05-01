@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common'
-import { TaskController } from './task/controllers/task.controller'
-import { TaskService } from './task/service/task.service'
+import { TaskController } from './task/presentation/controllers/task.controller'
+import { TaskService } from './task/data/service/task.service'
 import { TaskModule } from './task/task.module'
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TaskEntity } from './task/entity/task.entity'
+import { TaskEntity } from './task/domain/entity/task.entity'
+import { ExternalApiModule } from './external-api/external-api.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { TaskEntity } from './task/entity/task.entity'
       entities: [__dirname + "/**/*.entity{.ts,.js}"],
       synchronize: true
     }),
+    ExternalApiModule,
   ],
   controllers: [TaskController],
   providers: [TaskService],
