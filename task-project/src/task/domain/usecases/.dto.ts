@@ -13,7 +13,7 @@ export class createTask {
     @ApiProperty({ type: 'string' })
     severity: string
     @ApiProperty({ type: 'string' })
-    area: string
+    timeWork: string
     createdAt: Date
 }
 
@@ -30,7 +30,7 @@ export class updateTask {
     @ApiProperty({ type: 'string' })
     severity: string
     @ApiProperty({ type: 'string' })
-    area: string
+    timeWork: string
     createdAt: Date
     updatedAt: Date
 }

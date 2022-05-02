@@ -32,9 +32,9 @@ export class TaskEntity {
     @Column()
     severity: string
 
-    @ApiProperty({ example: 'Technology', description: 'Task Area. Technology, Commercial, [...]' })
+    @ApiProperty({ example: '45h', description: 'Time task work.' })
     @Column()
-    area: string
+    timeWork: string
 
     @ApiProperty({ example: '2022-04-27T03:20:50.000Z', description: 'Task created in' })
     @CreateDateColumn()

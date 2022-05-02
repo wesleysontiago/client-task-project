@@ -1,16 +1,18 @@
 <?php
 
-if(empty($_POST['client']) || empty($_POST['task']) || empty($_POST['timeWork']))
+$json = json_decode(file_get_contents('php://input'), true);
+$client     = filter_var($json['client']);
+$task       = filter_var($json['task']);
+$timeWork   = filter_var($json['timeWork']);
+$timeWork   = preg_replace("/[^0-9]/", "", $timeWork);
+
+if(empty($json['client']) || empty($json['task']) || empty($json['timeWork']))
 {
-    echo $_POST['client'];
+    echo $json['client'];
     echo "Fill all the required fields";
     return;
 }
 
-$client     = filter_var($_POST['client']);
-$task       = filter_var($_POST['task']);
-$timeWork   = filter_var($_POST['timeWork']);
-$timeWork   = preg_replace("/[^0-9]/", "", $timeWork);
 define("API_KEY",'22cf0daaab908d986c661a5340e3bb46');
 define("ID_LIST",'62669da528b2a60ccab74ff1');
 define("TOKEN",'c651399d140c61789922ade859dce357234befcc87e1ea75616622ac02f20be1');

@@ -4,6 +4,7 @@ import { Response } from 'express'
 import { createTask, updateTask } from '../../domain/usecases/.dto'
 import { TaskEntity } from '../../domain/entity/task.entity'
 import { TaskService } from '../../data/service/task.service'
+import axios from 'axios'
 
 @Controller('task')
 export class TaskController {
@@ -28,8 +29,21 @@ export class TaskController {
     @ApiOperation({ summary: 'Create Task' })
     @ApiBody({ type: createTask })
     @ApiResponse({ status: 200, description: 'Create Task', type: TaskEntity })
-    create(@Body() task: createTask): Promise<any> {
-        return this.taskService.create(task)
+    async create(@Body() task: createTask): Promise<any> {
+        const createTask = await this.taskService.create(task)
+        if (createTask) {
+            const taskExternal = {
+                "client": task.assignedTo,
+                "task": task.title,
+                "timeWork": task.timeWork
+            }
+    
+            await axios.post('http://localhost:80', taskExternal)
+                .then(response => {
+                    console.log(response.data)
+                })
+                .catch(err => console.log(err.message))
+        }
     }
 
     @Put(':id')
