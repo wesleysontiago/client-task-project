@@ -1,0 +1,7 @@
+{
+    "require": {
+        "nmred/kafka-php": "v0.2.0.8",
+        "monolog/monolog": "^2.7",
+        "php-amqplib/php-amqplib": "^3.2"
+    }
+}
