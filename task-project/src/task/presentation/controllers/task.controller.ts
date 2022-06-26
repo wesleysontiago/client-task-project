@@ -5,12 +5,14 @@ import { createTask, updateTask } from '../../domain/usecases/.dto'
 import { TaskEntity } from '../../domain/entity/task.entity'
 import { TaskService } from '../../data/service/task.service'
 import axios from 'axios'
+import { EventPattern, MessagePattern } from '@nestjs/microservices'
 
 @Controller('task')
 export class TaskController {
     constructor(private readonly taskService: TaskService) {}
 
     @Get()
+    @MessagePattern({cmd: 'greeting'})
     @ApiOperation({ summary: 'Find All Tasks' })
     @ApiResponse({ status: 200, description: 'Find all tasks in application', type: TaskEntity })
     findAll(): Promise<TaskEntity[]> {
