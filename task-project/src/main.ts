@@ -2,15 +2,22 @@ import { NestFactory } from '@nestjs/core'
 import { MicroserviceOptions, Transport } from '@nestjs/microservices'
 import { SwaggerModule, DocumentBuilder, SwaggerCustomOptions } from '@nestjs/swagger'
 import { AppModule } from './app.module'
-import { MicroserviceModule } from './microservice/microservice.module'
 
 async function bootstrap() {
-  const microservice = await NestFactory.createMicroservice(MicroserviceModule, {
-    transport: Transport.TCP,
-  })
-  await microservice.listen()
-
   const app = await NestFactory.create(AppModule)
+
+  await app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.RMQ,
+    options: {
+      urls: [`amqp://guest:guest@localhost:5672`],
+      queue: 'task_queue',
+      queueOptions: {
+        durable: false,
+      },
+    },
+  });
+
+  app.startAllMicroservices();
 
   const config = new DocumentBuilder()
     .setTitle('Task Project example')

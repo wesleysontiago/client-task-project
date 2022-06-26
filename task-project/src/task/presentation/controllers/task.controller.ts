@@ -4,12 +4,13 @@ import { Response } from 'express'
 import { createTask, updateTask } from '../../domain/usecases/.dto'
 import { TaskEntity } from '../../domain/entity/task.entity'
 import { TaskService } from '../../data/service/task.service'
+import { MensagensService } from 'src/task/data/service/mensagens.service'
 import axios from 'axios'
 import { EventPattern, MessagePattern } from '@nestjs/microservices'
 
 @Controller('task')
 export class TaskController {
-    constructor(private readonly taskService: TaskService) {}
+    constructor(private readonly taskService: TaskService, private readonly mensagensService: MensagensService) {}
 
     @Get()
     @MessagePattern({cmd: 'greeting'})
@@ -39,12 +40,8 @@ export class TaskController {
                 "task": task.title,
                 "timeWork": task.timeWork
             }
-    
-            await axios.post('http://localhost:80', taskExternal)
-                .then(response => {
-                    console.log(response.data)
-                })
-                .catch(err => console.log(err.message))
+
+            await this.mensagensService.publishEvent(taskExternal)
         }
     }
 
