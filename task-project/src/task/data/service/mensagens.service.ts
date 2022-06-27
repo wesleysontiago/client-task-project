@@ -6,6 +6,6 @@ export class MensagensService {
     constructor(@Inject('GREETING_SERVICE') private client: ClientProxy){}
 
     async publishEvent(task: any) {
-        this.client.emit('task-created', task);
+        this.client.emit('task-created', JSON.stringify(task));
     }
 }
